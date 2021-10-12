@@ -38,11 +38,11 @@ class HelperJson
      */
     public static function sendAnswer($data = null, $message = null, $code = 400)
     {
-        if (is_array($data) || $data instanceof \Illuminate\Support\Collection || $data instanceof \Illuminate\Database\Eloquent\Model) {
+       // if (is_array($data) || $data instanceof \Illuminate\Support\Collection || $data instanceof \Illuminate\Database\Eloquent\Model) {
             return response()->json($message, $code);
-        }
+      //  }
 
-        return config('message.error');
+     //   return config('message.error');
     }
 
     

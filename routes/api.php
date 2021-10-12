@@ -16,18 +16,28 @@ use App\Http\Middleware\Cors;
 */
 
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\LogoutController;
+
+
+
 
 
 Route::middleware([Cors::class])->group(function () {
     Route::post('/register', [RegisterController::class, 'register']);
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/servises', [LoginController::class, 'servises']);
+    Route::middleware('auth:api')->group( function () {
+      Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
+   //   Route::get('/user', [UserController::class, 'user']);
+    }
+
+  );
+  
 });
 
 
 
-
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 // Route::group(['namespace' => 'Api'], function () {
   //  Route::group(['namespace' => 'Api\Auth'], function () {
