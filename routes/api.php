@@ -18,22 +18,25 @@ use App\Http\Middleware\Cors;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
-
+use App\Http\Controllers\Api\ServiсeController;
 
 
 
 
 Route::middleware([Cors::class])->group(function () {
-    Route::post('/register', [RegisterController::class, 'register']);
-    Route::post('/login', [LoginController::class, 'login'])->name('login');
-    Route::post('/servises', [LoginController::class, 'servises']);
-    Route::middleware('auth:api')->group( function () {
+  Route::post('/register', [RegisterController::class, 'register']);
+  Route::post('/login', [LoginController::class, 'login'])->name('login');
+  Route::get('/services', [ServiсeController::class, 'get']);
+  Route::get('/services/{slug}', [ServiсeController::class, 'getDetail']);
+  Route::post('/services/add', [ServiсeController::class, 'add']);
+ // Route::post('/services-add', [ServiсeController::class, 'add']);
+  Route::middleware('auth:api')->group(
+    function () {
       Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
-   //   Route::get('/user', [UserController::class, 'user']);
+      //   Route::get('/user', [UserController::class, 'user']);
     }
 
   );
-  
 });
 
 

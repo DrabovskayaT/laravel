@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Helpers\HelperJson;
 use App\Http\Controllers\Controller;
-use App\Servises\AuthService;
+use App\Serviсes\AuthService;
 use App\Http\Requests\Api\Auth\RegisterFormRequest;
 
 /**
