@@ -19,7 +19,8 @@ class LoginController extends Controller
     {
         try{
             $result = AuthService::login($request);
-            return HelperJson::sendAnswer($result, config('message.success'), 200);
+            // return HelperJson::sendAnswer($result, config('message.success'), 200);
+            return $result;
         }catch (\Throwable $th) {
             return $th;
         }

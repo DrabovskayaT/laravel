@@ -1,0 +1,40 @@
+<?php
+/**
+ * Список адресов, для которых необязательна авторизация
+ */
+return [
+  'accessNotAuthRoutes' => [
+      'api/header',
+      'api/add-favorite',
+      'api/delete-favorite-item',
+      'api/favorites',
+      'api/get-discounts-cards',
+      'api/get-promocodes-cards',
+      'api/promocode',
+      'api/promocode-vote',
+      'api/main-booklet-cards',
+      'api/shops-cards',
+      'api/stories-cards',
+      'api/stories-popup',
+      'api/stories-popup-category',
+      'api/story-vote',
+      'api/add-comment',
+      'api/comment-vote',
+      'api/category-story-cards',
+      'api/tag-story-cards',
+      'api/catalog-discounts',
+      'api/catalog-promocodes',
+      'api/discount-detail',
+      'api/discount-detail-comments',
+      'api/get-discount-types',
+      'api/get-other-discounts',
+      'api/recent-stories',
+      'api/popular-stories',
+      'api/get-favorite-actions',
+      'api/get-favorite-stories',
+      'api/get-favorite-booklets',
+      'api/get-favorite-shops',
+      'api/user_notifications',
+      'api/read_notifications',
+  ]
+];
