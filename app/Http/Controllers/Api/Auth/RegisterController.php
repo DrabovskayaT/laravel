@@ -74,7 +74,9 @@ class RegisterController extends Controller
             $result =   AuthService::register($request);
             return HelperJson::sendAnswer($result, config('message.success'), 200);
         } catch (\Throwable $th) {
-            return HelperJson::sendAnswer(config('message.error'), 400);
+            return $th;
+            // dd($th);
+            // return HelperJson::sendAnswer(config('message.error'), 400);
         }
     }
 }
