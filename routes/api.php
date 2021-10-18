@@ -19,7 +19,7 @@ use App\Http\Middleware\Cors;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\LogoutController;
-use App\Http\Controllers\Api\ServiсeController;
+use App\Http\Controllers\Api\ServiceController;
 use App\Models\Service;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
@@ -34,11 +34,11 @@ Route::middleware([Cors::class])->group(function () {
   Route::middleware('auth:api')->group(
 
     function () {
-      Route::get('/services', [ServiсeController::class, 'getList'])->name('services');
+      Route::get('/services', [ServiceController::class, 'getList'])->name('services');
 
-      Route::post('/services-add', [ServiсeController::class, 'add'])->name('services-add');
+      Route::post('/services-add', [ServiceController::class, 'add'])->name('services-add');
 
-      Route::get('/services/{slug}', [ServiсeController::class, 'getDetail'])->name('services-detail');
+      Route::get('/services/{slug}', [ServiceController::class, 'getDetail'])->name('services-detail');
 
       Route::get('/logout', [LogoutController::class, 'logout'])->name('logout');
     }
@@ -46,5 +46,18 @@ Route::middleware([Cors::class])->group(function () {
   );
   Route::get('/email/verify', function () {
     return view('auth.verify-email');
-  })->middleware('auth')->name('verification.notice');
+})->middleware('auth')->name('verification.notice');
+
+
+  Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/home');
+  })->middleware(['auth', 'signed'])->name('verification.verify');
+
+  Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+  })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 });
