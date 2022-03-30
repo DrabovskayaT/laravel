@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Helpers\HelperJson;
 use App\Http\Controllers\Controller;
 use App\Serviсes\AuthService;
 use App\Http\Requests\Api\Auth\RegisterFormRequest;
+use \Exception;
 
 /**
  * Registration user class
@@ -35,7 +38,6 @@ class RegisterController extends Controller
      *                      type="string",
      *                       writeOnly="true"
      *                 ),
-     *                
      *             )
      *         )
      *     ),
@@ -73,10 +75,8 @@ class RegisterController extends Controller
         try {
             $result =   AuthService::register($request);
             return HelperJson::sendAnswer($result, config('message.success'), 200);
-        } catch (\Throwable $th) {
-            return $th;
-            // dd($th);
-            // return HelperJson::sendAnswer(config('message.error'), 400);
+        } catch (Exception $e) {
+            return $e->getMessage();
         }
     }
 }

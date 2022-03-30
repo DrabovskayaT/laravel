@@ -16,17 +16,21 @@ use Illuminate\Auth\Events\Registered;
  * Class AuthService
  * @package App\Services
  */
-class AuthService
+class AuthService // extends AbstractFormatter
 {
 
     /**
-     * Undocumented function
+     * Register function
      *
      * @param RegisterFormRequest $data
      * @return void
      */
     public static function register(RegisterFormRequest $data)
     {
+        //TODO: временно закомментировано за ненадобностью
+        //  $data = $this->getValue();
+
+
         $user =  User::create(array_merge(
             $data->only('name', 'email'),
             ['password' => bcrypt($data->password)],
@@ -44,15 +48,18 @@ class AuthService
      */
     public static function login(LoginFormRequest $data)
     {
+        //TODO: временно закомментировано за ненадобностью
+        //  $data = $this->getValue();
+
         $credentials = $data->only('email', 'password');
 
         if (!Auth::attempt($credentials)) {
             return abort(401);
         }
-      
+
         $user = Auth::user();
 
-        if(is_null($user->email_verified_at)){
+        if (is_null($user->email_verified_at)) {
             return response()->json('error', 401);
         }
         $token = $user->createToken(config('app.name'));

@@ -24,27 +24,11 @@ class Authenticate extends Middleware
      */
     public function handle($request, Closure $next, ...$guards)
     {
-        //    dd($request->header());
-        //@Note Временные проверки, для облегчения интеграции backend и fronend
-        // if (in_array(Route::current()->uri, config('middleware.accessNotAuthRoutes')) && !isset($_REQUEST["TEST"])
-        //     && !$request->header('Authorization')) {
-        //     return $next($request);
-        // }
-
-        // if ($request->has("local_auth_front")) {
-        //     $user = User::find(1);
-        //     if($user){
-        //         Auth::login($user);
-        //         return $next($request);
-        //     }
-        // }
-
         try {
             $this->authenticate($request, $guards);
         } catch (AuthenticationException $e) {
             return abort(403);
         }
-
 
         return $next($request);
     }

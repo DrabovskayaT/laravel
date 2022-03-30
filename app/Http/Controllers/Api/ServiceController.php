@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
@@ -7,14 +9,15 @@ use App\Http\Controllers\Controller;
 use App\Serviсes\ServiсeService;
 use App\Helpers\HelperJson;
 use App\Http\Requests\Api\ServiceRequest;
+use \Exception;
 
 /**
- * Undocumented class
+ * Controller for reuest data servise
  */
 class ServiceController extends Controller
 {
     /**
-     * Метод получает список всех сервисов
+     * Get all servises
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -24,13 +27,13 @@ class ServiceController extends Controller
         try {
             $result = ServiсeService::getList();
             return HelperJson::sendAnswer($result, config('message.success'), 200);
-        } catch (\Throwable $th) {
-            return $th;
+        } catch (Exception $th) {
+            return $th->getMessage();
         }
     }
 
     /**
-     * Метод добавляет услугу
+     * Add servises
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -40,13 +43,13 @@ class ServiceController extends Controller
         try {
             $result = ServiсeService::add($request);
             return HelperJson::sendAnswer($result, config('message.success'), 200);
-        } catch (\Throwable $th) {
-            return $th;
+        } catch (Exception $th) {
+            return $th->getMessage();
         }
     }
 
     /**
-     * Метод получает детальную карточку услуги
+     * Get detail servises
      *
      * @param Type|null $var
      * @return void
@@ -58,8 +61,8 @@ class ServiceController extends Controller
                 $result = ServiсeService::getDetail($request->slug);
                 return HelperJson::sendAnswer($result, config('message.success'), 200);
             }
-        } catch (\Throwable $th) {
-            return $th;
+        } catch (Exception $th) {
+            return $th->getMessage();
         }
     }
 }
